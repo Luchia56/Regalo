@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regaloooo</title>
+  <link rel="stylesheet" href="estilos/estilos.css">
+</head>
+<body>
+
+  <div id="pantalla-inicio" class="pantalla">
+    <h1 class="titulo">BIENVENIDO A LA PRUEBA DEL JUEGO: <br><span>LA AVENTURA ESPECIAL</span></h1>
+    <p class="subtitulo">Una misión legendaria hecha solo para ti.</p>
+    
+    <button id="btn-comenzar" class="boton-jugar">EMPEZAR AVENTURA</button>
+  </div>
+
+  <!-- PANTALLA DE JUEGO / COMBATE -->
+  <div id="pantalla-juego" class="pantalla oculta">
+    <div class="escenario">
+
+      <!-- ENEMIGO (Arriba a la derecha) -->
+      <div class="tarjeta-combate enemigo">
+        <div class="info-pj">
+          <span class="nombre">Jefe Examen Final</span>
+          <div class="barra-vida-bg">
+            <div id="vida-enemigo" class="barra-vida-fill"></div>
+          </div>
+        </div>
+        <!-- Imagen provisional del enemigo -->
+        <img src="https://via.placeholder.com/120/ff4757/ffffff?text=JEFE" alt="Enemigo" class="sprite-pj">
+      </div>
+
+      <!-- JUGADOR -->
+      <div class="tarjeta-combate jugador">
+        <!-- Imagen provisional de Jugador -->
+        <img src="https://via.placeholder.com/120/2ed573/ffffff?text=JUGADOR" alt="Jugador" class="sprite-pj">
+        <div class="info-pj">
+          <span class="nombre">Viajero / Nahida</span>
+          <div class="barra-vida-bg">
+            <div id="vida-jugador" class="barra-vida-fill"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PANEL DE ATAQUES -->
+    <div class="panel-control">
+      <p id="mensaje-historia">¡Un enemigo salvaje ha aparecido! ¿Qué vas a hacer?</p>
+      <div class="contenedor-botones">
+        <button id="btn-ataque1" class="btn-accion">Ataque Normal</button>
+        <button id="btn-ataque2" class="btn-accion btn-especial">Semilla Dendro 🌿</button>
+        <button id="btn-curar" class="btn-accion btn-curar">Comer Protogema 💎</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

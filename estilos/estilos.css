@@ -1,0 +1,168 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #0d0f17;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.pantalla {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Para ocultar pantallas que no estamos usando */
+.oculta {
+  display: none;
+}
+
+.titulo {
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  color: #e0e6ed;
+}
+
+.titulo span {
+  color: #55d6aa;
+}
+
+.subtitulo {
+  color: #a0aec0;
+  font-size: 1.1rem;
+}
+
+.boton-jugar {
+  margin-top: 15px;
+  padding: 15px 35px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #0d0f17;
+  background-color: #55d6aa;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.boton-jugar:hover {
+  transform: scale(1.05);
+  background-color: #44b892;
+}
+
+
+.escenario {
+  width: 90vw;
+  max-width: 600px;
+  height: 300px;
+  background-color: #1a1d28;
+  border-radius: 15px;
+  border: 2px solid #55d6aa;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  position: relative;
+}
+
+.tarjeta-combate {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.tarjeta-combate.enemigo {
+  align-self: flex-end; /* Lo mueve a la derecha */
+}
+
+.tarjeta-combate.jugador {
+  align-self: flex-start; /* Lo mueve a la izquierda */
+}
+
+.info-pj {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.nombre {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* Barras de vida */
+.barra-vida-bg {
+  width: 150px;
+  height: 14px;
+  background-color: #333;
+  border-radius: 7px;
+  overflow: hidden;
+  border: 1px solid #555;
+}
+
+.barra-vida-fill {
+  width: 100%; /* Empieza llena al 100% */
+  height: 100%;
+  background-color: #2ed573;
+  transition: width 0.3s ease; /* Anima la bajada de vida */
+}
+
+.sprite-pj {
+  border-radius: 10px;
+}
+
+/* Panel de control e historia */
+.panel-control {
+  width: 90vw;
+  max-width: 600px;
+  background-color: #1a1d28;
+  border-radius: 15px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#mensaje-historia {
+  font-size: 0.95rem;
+  color: #e0e6ed;
+}
+
+.contenedor-botones {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-accion {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #3a3f58;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-accion:hover {
+  background-color: #4e5577;
+}
+
+.btn-especial { background-color: #2ed573; color: #0d0f17; }
+.btn-especial:hover { background-color: #26af5f; }
+
+.btn-curar { background-color: #70a1ff; color: #0d0f17; }
+.btn-curar:hover { background-color: #5388e6; }
