@@ -1,3 +1,6 @@
+/* ==========================================
+   1. ESTILOS GENERALES (Global)
+   ========================================== */
 * {
   margin: 0;
   padding: 0;
@@ -12,25 +15,31 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  text-align: center;
+  overflow-x: hidden;
 }
 
 .pantalla {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 20px;
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  text-align: center;
 }
 
-/* Para ocultar pantallas que no estamos usando */
 .oculta {
-  display: none;
+  display: none !important;
 }
 
+/* ==========================================
+   2. PANTALLA DE INICIO Y SELECCIÓN
+   ========================================== */
 .titulo {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   letter-spacing: 2px;
-  color: #e0e6ed;
 }
 
 .titulo span {
@@ -39,17 +48,16 @@ body {
 
 .subtitulo {
   color: #a0aec0;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .boton-jugar {
-  margin-top: 15px;
   padding: 15px 35px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #0d0f17;
   background-color: #55d6aa;
+  color: #0d0f17;
   border: none;
+  font-weight: bold;
+  font-size: 1.1rem;
   border-radius: 30px;
   cursor: pointer;
   transition: transform 0.2s, background-color 0.2s;
@@ -57,43 +65,91 @@ body {
 
 .boton-jugar:hover {
   transform: scale(1.05);
-  background-color: #44b892;
+  background-color: #44c297;
 }
 
+.rejilla-personajes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  max-width: 500px;
+  margin-top: 15px;
+}
 
-.escenario {
-  width: 90vw;
-  max-width: 600px;
-  height: 300px;
+.tarjeta-pj.seleccionable {
   background-color: #1a1d28;
-  border-radius: 15px;
-  border: 2px solid #55d6aa;
+  border: 2px solid #3a3f58;
+  border-radius: 12px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 20px;
-  position: relative;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
 }
 
+.tarjeta-pj.seleccionable img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.tarjeta-pj.seleccionable:hover {
+  transform: translateY(-5px);
+  border-color: #55d6aa;
+}
+
+/* ==========================================
+   3. PANTALLA DE COMBATE (ESCENARIO)
+   ========================================== */
+.escenario {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+  height: 320px;
+  background-color: #1a1d28;
+  border: 2px solid #55d6aa;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+/* Posiciones de las tarjetas dentro del escenario */
 .tarjeta-combate {
+  position: absolute;
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-.tarjeta-combate.enemigo {
-  align-self: flex-end; /* Lo mueve a la derecha */
-}
-
+/* Jugador abajo a la izquierda */
 .tarjeta-combate.jugador {
-  align-self: flex-start; /* Lo mueve a la izquierda */
+  bottom: 20px;
+  left: 20px;
+  flex-direction: row;
 }
 
+/* Enemigo arriba a la derecha */
+.tarjeta-combate.enemigo {
+  top: 20px;
+  right: 20px;
+  flex-direction: row-reverse;
+}
+
+/* ¡AQUÍ ESTÁ LA MAGIA! Control del tamaño de los personajes */
+.sprite-pj {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.5));
+}
+
+/* Barras de Vida e Información */
 .info-pj {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 5px;
+  width: 160px;
 }
 
 .nombre {
@@ -101,68 +157,58 @@ body {
   font-size: 0.9rem;
 }
 
-/* Barras de vida */
 .barra-vida-bg {
-  width: 150px;
+  width: 100%;
   height: 14px;
-  background-color: #333;
+  background-color: #2a2e3d;
   border-radius: 7px;
   overflow: hidden;
-  border: 1px solid #555;
+  border: 1px solid #3a3f58;
 }
 
 .barra-vida-fill {
-  width: 100%; /* Empieza llena al 100% */
+  width: 100%;
   height: 100%;
   background-color: #2ed573;
-  transition: width 0.3s ease; /* Anima la bajada de vida */
+  transition: width 0.3s ease;
 }
 
-.sprite-pj {
-  border-radius: 10px;
-}
-
-/* Panel de control e historia */
-.panel-control {
-  width: 90vw;
-  max-width: 600px;
+/* Panel de Controles y Texto */
+.panel-controles {
+  width: 100%;
+  max-width: 650px;
   background-color: #1a1d28;
-  border-radius: 15px;
   padding: 15px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
-#mensaje-historia {
-  font-size: 0.95rem;
-  color: #e0e6ed;
-}
-
-.contenedor-botones {
+.caja-botones {
   display: flex;
-  gap: 10px;
   justify-content: center;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
 .btn-accion {
-  padding: 10px 15px;
+  padding: 10px 18px;
   border: none;
   border-radius: 8px;
-  background-color: #3a3f58;
-  color: white;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.2s;
+  background-color: #2f3542;
+  color: white;
+  transition: background-color 0.2s;
 }
 
 .btn-accion:hover {
-  background-color: #4e5577;
+  background-color: #55d6aa;
+  color: #0d0f17;
 }
 
-.btn-especial { background-color: #2ed573; color: #0d0f17; }
-.btn-especial:hover { background-color: #26af5f; }
-
-.btn-curar { background-color: #70a1ff; color: #0d0f17; }
-.btn-curar:hover { background-color: #5388e6; }
+.btn-curar {
+  background-color: #eccc68;
+  color: #0d0f17;
+}

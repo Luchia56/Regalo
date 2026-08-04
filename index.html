@@ -15,6 +15,50 @@
     <button id="btn-comenzar" class="boton-jugar">EMPEZAR AVENTURA</button>
   </div>
 
+  <!-- PANTALLA DE SELECCIÓN DE PERSONAJE -->
+  <div id="pantalla-seleccion" class="pantalla oculta">
+    <h2>ELIGE A TU HEROÍNA</h2>
+    <p class="subtitulo">¿Con quién quieres enfrentarte a esta aventura?</p>
+
+    <div class="rejilla-personajes">
+      <!-- Tarjeta Nahida -->
+      <div class="tarjeta-pj seleccionable" data-nombre="Nahida" data-img="img/nahida.png" data-vida="100">
+        <img src="img/nahida.png" alt="Nahida">
+        <span>Nahida 🌿</span>
+      </div>
+
+      <!-- Tarjeta Klee -->
+      <div class="tarjeta-pj seleccionable" data-nombre="Klee" data-img="img/klee.png" data-vida="90">
+        <img src="img/klee.png" alt="Klee">
+        <span>Klee 💥</span>
+      </div>
+
+      <!-- Tarjeta Beidou -->
+      <div class="tarjeta-pj seleccionable" data-nombre="Beidou" data-img="img/beidou.png" data-vida="120">
+        <img src="img/beidou.png" alt="Beidou">
+        <span>Beidou ⚡</span>
+      </div>
+
+      <!-- Tarjeta Eula -->
+      <div class="tarjeta-pj seleccionable" data-nombre="Eula" data-img="img/eula.png" data-vida="110">
+        <img src="img/eula.png" alt="Eula">
+        <span>Eula ❄️</span>
+      </div>
+
+      <!-- Tarjeta Mona -->
+      <div class="tarjeta-pj seleccionable" data-nombre="Mona" data-img="img/mona.png" data-vida="95">
+        <img src="img/mona.png" alt="Mona">
+        <span>Mona 💧</span>
+      </div>
+
+      <!-- Tarjeta Noelle -->
+      <div class="tarjeta-pj seleccionable" data-nombre="Noelle" data-img="img/noelle.png" data-vida="130">
+        <img src="img/noelle.png" alt="Noelle">
+        <span>Noelle 🪨</span>
+      </div>
+    </div>
+  </div>
+
   <!-- PANTALLA DE JUEGO / COMBATE -->
   <div id="pantalla-juego" class="pantalla oculta">
     <div class="escenario">
@@ -22,26 +66,26 @@
       <!-- ENEMIGO (Arriba a la derecha) -->
       <div class="tarjeta-combate enemigo">
         <div class="info-pj">
-          <span class="nombre">Jefe Examen Final</span>
+          <span class="nombre">Jean</span>
           <div class="barra-vida-bg">
             <div id="vida-enemigo" class="barra-vida-fill"></div>
           </div>
         </div>
         <!-- Imagen provisional del enemigo -->
-        <img src="https://via.placeholder.com/120/ff4757/ffffff?text=JEFE" alt="Enemigo" class="sprite-pj">
+        <img src="img/Jean.png" alt="Enemigo1" class="sprite-pj" id="img-enemigo">
       </div>
 
       <!-- JUGADOR -->
-      <div class="tarjeta-combate jugador">
-        <!-- Imagen provisional de Jugador -->
-        <img src="https://via.placeholder.com/120/2ed573/ffffff?text=JUGADOR" alt="Jugador" class="sprite-pj">
-        <div class="info-pj">
-          <span class="nombre">Viajero / Nahida</span>
-          <div class="barra-vida-bg">
-            <div id="vida-jugador" class="barra-vida-fill"></div>
-          </div>
-        </div>
+  <div class="tarjeta-combate jugador">
+    <img src="img/nahida.png" alt="Jugador" class="sprite-pj" id="img-jugador">
+
+    <div class="info-pj">
+      <span class="nombre" id="nombre-jugador">Nahida</span>
+      <div class="barra-vida-bg">
+        <div id="vida-jugador" class="barra-vida-fill"></div>
       </div>
+    </div>
+  </div>
 
     </div>
 
