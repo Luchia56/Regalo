@@ -1,18 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Regaloooo</title>
   <link rel="stylesheet" href="estilos/estilos.css">
 </head>
+
 <body>
 
   <div id="pantalla-inicio" class="pantalla">
     <h1 class="titulo">BIENVENIDO A LA PRUEBA DEL JUEGO: <br><span>LA AVENTURA ESPECIAL</span></h1>
     <p class="subtitulo">Una misión legendaria hecha solo para ti.</p>
-    
+
     <button id="btn-comenzar" class="boton-jugar">EMPEZAR AVENTURA</button>
+  </div>
+
+  <!-- 1.5 PANTALLA DE HISTORIA -->
+  <div id="pantalla-historia" class="pantalla oculta">
+    <h2 class="titulo">LA MISIÓN EN LUCHILANDIA</h2>
+    <div class="caja-historia">
+      <p>📜 <strong>El Archivo Antiguo:</strong></p>
+      <p>Una extraña anomalía ha alterado el orden del mundo y se han llevado a la programadora de este juego.</p>
+      <p>Solo quien consiga superar ambas rondas puede obtener el título de <strong>Guardián de Honor</strong> y salvar a la chica.</p>
+    </div>
+    <button id="btn-continuar-historia" class="boton-jugar">ELEGIR PERSONAJE ⚔️</button>
   </div>
 
   <!-- PANTALLA DE SELECCIÓN DE PERSONAJE -->
@@ -65,27 +78,28 @@
 
       <!-- ENEMIGO (Arriba a la derecha) -->
       <div class="tarjeta-combate enemigo">
+        <!-- ¡IMPORTANTE: Añadir id="img-enemigo" aquí! -->
+        <img src="img/enemigo1.png" alt="Enemigo" class="sprite-pj" id="img-enemigo">
+
         <div class="info-pj">
-          <span class="nombre">Jean</span>
+          <span class="nombre" id="nombre-enemigo">Jean</span>
           <div class="barra-vida-bg">
             <div id="vida-enemigo" class="barra-vida-fill"></div>
           </div>
         </div>
-        <!-- Imagen provisional del enemigo -->
-        <img src="img/Jean.png" alt="Enemigo1" class="sprite-pj" id="img-enemigo">
       </div>
 
       <!-- JUGADOR -->
-  <div class="tarjeta-combate jugador">
-    <img src="img/nahida.png" alt="Jugador" class="sprite-pj" id="img-jugador">
+      <div class="tarjeta-combate jugador">
+        <img src="img/nahida.png" alt="Jugador" class="sprite-pj" id="img-jugador">
 
-    <div class="info-pj">
-      <span class="nombre" id="nombre-jugador">Nahida</span>
-      <div class="barra-vida-bg">
-        <div id="vida-jugador" class="barra-vida-fill"></div>
+        <div class="info-pj">
+          <span class="nombre" id="nombre-jugador">Nahida</span>
+          <div class="barra-vida-bg">
+            <div id="vida-jugador" class="barra-vida-fill"></div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
     </div>
 
@@ -99,7 +113,17 @@
       </div>
     </div>
   </div>
+  <!-- 4. PANTALLA DE VICTORIA (¡NUEVA!) -->
+  <div id="pantalla-victoria" class="pantalla oculta">
+    <h1 class="titulo">🎉 ¡VICTORIA ABSOLUTA! 🎉</h1>
+    <p class="subtitulo">Has derrotado al Arconte Anemo Venti y superado la prueba legendaria.</p>
+    <div class="caja-regalo">
+      <p>🏆 ¡Enhorabuena, viajero! Has demostrado ser el más fuerte de Teyvat.</p>
+    </div>
+    <button id="btn-reiniciar" class="boton-jugar">VOLVER A JUGAR</button>
+  </div>
 
   <script src="js/script.js"></script>
 </body>
+
 </html>

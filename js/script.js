@@ -1,57 +1,86 @@
 // --- ELEMENTOS DE LAS PANTALLAS ---
 const pantallaInicio = document.getElementById("pantalla-inicio");
+const pantallaHistoria = document.getElementById("pantalla-historia");
 const pantallaSeleccion = document.getElementById("pantalla-seleccion");
 const pantallaJuego = document.getElementById("pantalla-juego");
+const pantallaVictoria = document.getElementById("pantalla-victoria");
 
 const btnComenzar = document.getElementById("btn-comenzar");
+const btnContinuarHistoria = document.getElementById("btn-continuar-historia");
+const btnReiniciar = document.getElementById("btn-reiniciar");
 const tarjetasPersonajes = document.querySelectorAll(".tarjeta-pj.seleccionable");
 
 // Elementos del combate
 const barraVidaEnemigo = document.getElementById("vida-enemigo");
 const barraVidaJugador = document.getElementById("vida-jugador");
 const textoHistoria = document.getElementById("mensaje-historia");
+const nombreEnemigoDOM = document.getElementById("nombre-enemigo");
+const imgEnemigoDOM = document.getElementById("img-enemigo");
 
 const btnAtaque1 = document.getElementById("btn-ataque1");
 const btnAtaque2 = document.getElementById("btn-ataque2");
 const btnCurar = document.getElementById("btn-curar");
 
-// --- VARIABLES DE ESTADO ---
+// --- CONFIGURACIÓN DE LOS JEFES ---
+let rondaActual = 1;
+const datosJefes = {
+  1: { nombre: "Jean (Caballero de Favonius)", vida: 100, dañoBase: 12, img: "img/Jean.png" },
+  2: { nombre: "Venti (¡Arconte Anemo!)", vida: 180, dañoBase: 22, img: "img/Venti.png" }
+};
+
 let vidaEnemigo = 100;
 let vidaJugador = 100;
 
-// Objeto para guardar la heroína seleccionada
+// Objeto del personaje seleccionado
 let personajeJugador = {
   nombre: "Nahida",
   img: "img/nahida.png",
   vidaMax: 100
 };
 
-// --- FLUJO DE PANTALLAS Y SELECCIÓN ---
+// --- FLUJO DE PANTALLAS ---
 
-// 1. Al hacer clic en "EMPEZAR AVENTURA", vamos a la selección
-btnComenzar.addEventListener("click", () => {
-  pantallaInicio.classList.add("oculta");
-  pantallaSeleccion.classList.remove("oculta");
-});
+// 1. De Inicio a Historia
+if (btnComenzar) {
+  btnComenzar.addEventListener("click", () => {
+    pantallaInicio.classList.add("oculta");
+    pantallaHistoria.classList.remove("oculta");
+  });
+}
 
-// 2. Al hacer clic en una tarjeta de personaje:
+// 2. De Historia a Selección de Personaje
+if (btnContinuarHistoria) {
+  btnContinuarHistoria.addEventListener("click", () => {
+    pantallaHistoria.classList.add("oculta");
+    pantallaSeleccion.classList.remove("oculta");
+  });
+}
+
+// 3. De Selección a Combate
 tarjetasPersonajes.forEach(tarjeta => {
   tarjeta.addEventListener("click", () => {
-    // Leemos los datos configurados en la tarjeta HTML
     personajeJugador.nombre = tarjeta.getAttribute("data-nombre");
     personajeJugador.img = tarjeta.getAttribute("data-img");
     personajeJugador.vidaMax = parseInt(tarjeta.getAttribute("data-vida"));
 
-    // Transición de Selección a Juego
     pantallaSeleccion.classList.add("oculta");
     pantallaJuego.classList.remove("oculta");
 
-    // Iniciar el personaje en el combate
     prepararJugadorEnCombate();
+    rondaActual = 1;
+    iniciarRonda();
   });
 });
 
-// Función para cargar los datos de la heroína en el escenario
+// Reiniciar juego desde la pantalla de victoria
+if (btnReiniciar) {
+  btnReiniciar.addEventListener("click", () => {
+    pantallaVictoria.classList.add("oculta");
+    pantallaSeleccion.classList.remove("oculta");
+  });
+}
+
+// --- FUNCIONES DE COMBATE ---
 function prepararJugadorEnCombate() {
   const nombreHTML = document.getElementById("nombre-jugador");
   const imgHTML = document.getElementById("img-jugador");
@@ -59,64 +88,88 @@ function prepararJugadorEnCombate() {
   if (nombreHTML) nombreHTML.innerText = personajeJugador.nombre;
   if (imgHTML) imgHTML.src = personajeJugador.img;
 
-  // Ajustar la vida con el máximo de la heroína elegida
   vidaJugador = personajeJugador.vidaMax;
   barraVidaJugador.style.width = "100%";
-  textoHistoria.innerText = `¡${personajeJugador.nombre} ha entrado al combate! ¿Qué vas a hacer?`;
+}
+
+function iniciarRonda() {
+  const jefe = datosJefes[rondaActual];
+  vidaEnemigo = jefe.vida;
+
+  if (nombreEnemigoDOM) nombreEnemigoDOM.innerText = jefe.nombre;
+  if (imgEnemigoDOM) imgEnemigoDOM.src = jefe.img;
+
+  barraVidaEnemigo.style.width = "100%";
+
+  if (rondaActual === 1) {
+    textoHistoria.innerText = `¡${personajeJugador.nombre} inicia la prueba contra Jean!`;
+  } else {
+    textoHistoria.innerText = `¡Cuidado! Jean se retira y el Arconte Venti entra al combate con un poder enorme...`;
+  }
 }
 
 // --- LÓGICA DE COMBATE ---
-
-// Función de ataque del jugador
 function ataqueJugador(daño, nombreAtaque) {
   if (vidaEnemigo <= 0 || vidaJugador <= 0) return;
 
-  // Restamos vida al enemigo
+  const jefe = datosJefes[rondaActual];
   vidaEnemigo = Math.max(0, vidaEnemigo - daño);
-  barraVidaEnemigo.style.width = vidaEnemigo + "%";
-  textoHistoria.innerText = `¡${personajeJugador.nombre} ha usado ${nombreAtaque} y le ha quitado ${daño} de vida!`;
+  
+  let porcentajeEnemigo = (vidaEnemigo / jefe.vida) * 100;
+  barraVidaEnemigo.style.width = porcentajeEnemigo + "%";
+  
+  textoHistoria.innerText = `¡${personajeJugador.nombre} usó ${nombreAtaque} e hizo ${daño} de daño!`;
 
-  // Comprobar si hemos ganado
   if (vidaEnemigo === 0) {
-    textoHistoria.innerText = "¡VICTORIA! 🎉 Has derrotado al Jefe.";
+    if (rondaActual === 1) {
+      rondaActual = 2;
+      textoHistoria.innerText = "¡Has vencido a Jean! Pero el viento empieza a soplar con fuerza... ¡Aparece Venti!";
+      setTimeout(iniciarRonda, 2000);
+    } else {
+      textoHistoria.innerText = "¡VICTORIA ABSOLUTA! 🎉 Has derrotado al Arconte Venti.";
+      setTimeout(() => {
+        pantallaJuego.classList.add("oculta");
+        pantallaVictoria.classList.remove("oculta");
+      }, 1500);
+    }
     return;
   }
-  
-  // Turno del enemigo (responde 1 segundo después)
+
   setTimeout(ataqueEnemigo, 1000);
 }
 
-// Función de respuesta del enemigo
 function ataqueEnemigo() {
   if (vidaEnemigo <= 0 || vidaJugador <= 0) return;
 
-  let dañoEnemigo = Math.floor(Math.random() * 15) + 5; // Daño entre 5 y 20
-  vidaJugador = Math.max(0, vidaJugador - dañoEnemigo);
+  const jefe = datosJefes[rondaActual];
+  let dañoEnemigo = Math.floor(Math.random() * 10) + jefe.dañoBase;
   
-  // Calcular porcentaje exacto según la vida máxima de la heroína
+  vidaJugador = Math.max(0, vidaJugador - dañoEnemigo);
   let porcentajeVida = (vidaJugador / personajeJugador.vidaMax) * 100;
   barraVidaJugador.style.width = porcentajeVida + "%";
 
-  textoHistoria.innerText += ` El Jefe contraataca y te quita ${dañoEnemigo} de vida.`;
+  textoHistoria.innerText += ` ${jefe.nombre} ataca y te quita ${dañoEnemigo} de vida.`;
 
   if (vidaJugador === 0) {
-    textoHistoria.innerText = "¡DERROTA! 💀 El Examen te ha suspendido... ¡Reinténtalo!";
+    textoHistoria.innerText = "¡DERROTA! 💀 No has superado la prueba. ¡Reinténtalo!";
   }
 }
 
-// Escuchar los clics de los botones de ataque
-btnAtaque1.addEventListener("click", () => ataqueJugador(15, "Ataque Normal"));
-btnAtaque2.addEventListener("click", () => ataqueJugador(30, "Habilidad Elemental 🌿"));
+// Botones de Acción
+if (btnAtaque1) btnAtaque1.addEventListener("click", () => ataqueJugador(15, "Ataque Normal"));
+if (btnAtaque2) btnAtaque2.addEventListener("click", () => ataqueJugador(30, "Habilidad Elemental 🌿"));
 
-btnCurar.addEventListener("click", () => {
-  if (vidaJugador <= 0 || vidaEnemigo <= 0) return;
-  
-  let curacion = 25;
-  vidaJugador = Math.min(personajeJugador.vidaMax, vidaJugador + curacion);
-  
-  let porcentajeVida = (vidaJugador / personajeJugador.vidaMax) * 100;
-  barraVidaJugador.style.width = porcentajeVida + "%";
-  
-  textoHistoria.innerText = `Te has tomado una Protogema. ¡${personajeJugador.nombre} recupera ${curacion} de HP!`;
-  setTimeout(ataqueEnemigo, 1000);
-});
+if (btnCurar) {
+  btnCurar.addEventListener("click", () => {
+    if (vidaJugador <= 0 || vidaEnemigo <= 0) return;
+
+    let curacion = 25;
+    vidaJugador = Math.min(personajeJugador.vidaMax, vidaJugador + curacion);
+
+    let porcentajeVida = (vidaJugador / personajeJugador.vidaMax) * 100;
+    barraVidaJugador.style.width = porcentajeVida + "%";
+
+    textoHistoria.innerText = `Te has tomado una Protogema. ¡${personajeJugador.nombre} recupera ${curacion} de HP!`;
+    setTimeout(ataqueEnemigo, 1000);
+  });
+}
