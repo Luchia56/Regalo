@@ -1,4 +1,4 @@
-// --- ELEMENTOS DE LAS PANTALLAS ---
+//ELEMENTOS DE LAS PANTALLAS
 const pantallaInicio = document.getElementById("pantalla-inicio");
 const pantallaHistoria = document.getElementById("pantalla-historia");
 const pantallaSeleccion = document.getElementById("pantalla-seleccion");
@@ -10,7 +10,7 @@ const btnContinuarHistoria = document.getElementById("btn-continuar-historia");
 const btnReiniciar = document.getElementById("btn-reiniciar");
 const tarjetasPersonajes = document.querySelectorAll(".tarjeta-pj.seleccionable");
 
-// Elementos del combate
+//Elementos del combate
 const barraVidaEnemigo = document.getElementById("vida-enemigo");
 const barraVidaJugador = document.getElementById("vida-jugador");
 const textoHistoria = document.getElementById("mensaje-historia");
@@ -21,7 +21,7 @@ const btnAtaque1 = document.getElementById("btn-ataque1");
 const btnAtaque2 = document.getElementById("btn-ataque2");
 const btnCurar = document.getElementById("btn-curar");
 
-// --- CONFIGURACIÓN DE LOS JEFES ---
+//CONFIGURACIÓN DE LOS JEFES
 let rondaActual = 1;
 const datosJefes = {
   1: { nombre: "Jean (Caballero de Favonius)", vida: 100, dañoBase: 12, img: "img/Jean.png" },
@@ -31,14 +31,14 @@ const datosJefes = {
 let vidaEnemigo = 100;
 let vidaJugador = 100;
 
-// Objeto del personaje seleccionado
+//Objeto del personaje seleccionado
 let personajeJugador = {
   nombre: "Nahida",
   img: "img/nahida.png",
   vidaMax: 100
 };
 
-// --- FLUJO DE PANTALLAS ---
+//FLUJO DE PANTALLAS
 
 // 1. De Inicio a Historia
 if (btnComenzar) {
@@ -80,7 +80,7 @@ if (btnReiniciar) {
   });
 }
 
-// --- FUNCIONES DE COMBATE ---
+//FUNCIONES DE COMBATE
 function prepararJugadorEnCombate() {
   const nombreHTML = document.getElementById("nombre-jugador");
   const imgHTML = document.getElementById("img-jugador");
@@ -108,7 +108,7 @@ function iniciarRonda() {
   }
 }
 
-// --- LÓGICA DE COMBATE ---
+//LÓGICA DE COMBATE
 function ataqueJugador(daño, nombreAtaque) {
   if (vidaEnemigo <= 0 || vidaJugador <= 0) return;
 
